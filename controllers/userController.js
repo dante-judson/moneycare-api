@@ -7,7 +7,7 @@ const User = mongoose.model('user');
 exports.register = (req, res) => {
     let user = new User(req.body);
     
-    user.hash_password = bcrypt.hashSync(req.body.password);
+    user.hash_password = bcrypt.hashSync(req.body.password,10);
 
     user.save((error, user) => {
         if(error){
@@ -34,7 +34,7 @@ exports.login = (req, res) => {
             if(!user.comparePassword(req.body.password,user.hash_password)){
                 res.status(401).send({ message: 'Authentication failed. Wrong password' });
             } else {
-                res.send({ token: jwt.sign({username: user.username}, keys.jwtKey) });
+                res.send({ token: jwt.sign({username: user.username, id: user._id}, keys.jwtKey) });
             }
 
         }

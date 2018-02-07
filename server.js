@@ -5,11 +5,13 @@ const bodyParser = require('body-parser');
 
 const app = express();
 app.use(bodyParser.json());
+
 mongoose.connect(keys.mongoUrl);
 require('./models/userModel');
+require('./models/entryModel');
 
-app.use(require('./middlewares/loginRequireMiddleware'));
 require('./routes/userRoutes')(app);
+require('./routes/entryRoutes')(app);
 
 const port = process.env.PORT || 3000;
 
