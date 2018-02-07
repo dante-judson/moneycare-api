@@ -5,4 +5,6 @@ module.exports = app => {
     app.get('/entry', loginMiddleware, entryController.listAll);
 
     app.post('/entry', loginMiddleware, entryController.save);
+
+    app.put('/entry/:id',loginMiddleware, entryController.update);
 }
