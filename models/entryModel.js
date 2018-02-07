@@ -7,7 +7,7 @@ const entryModel = new Schema({
     type: {
         type: String,
         enum: ['Receita','Despesa'],
-        required: true
+        required: true,
     },
     value: {
         type: Number,
