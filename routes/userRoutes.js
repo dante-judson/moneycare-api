@@ -5,4 +5,7 @@ module.exports = app => {
 
     app.post('/register',userController.register);
 
+    app.get('/user/email/:email',userController.checkEmail);
+
+    app.get('/user/username/:username',userController.checkUsername);
 }
