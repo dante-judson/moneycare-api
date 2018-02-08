@@ -23,16 +23,43 @@ exports.save = (req, res) => {
 
 exports.update = (req, res) => {
     let id = req.params.id;
-    entryModel.findById(id).then(oldEntry => {
+    entryModel.findById(id).then(() => {
 
-            entryModel.findByIdAndUpdate(id, req.body).then(updatedEntry => {
-                res.send(updatedEntry);
-            }).catch(err => {
-                res.status(400).send({ message: err.message });
-            });
-        
+        entryModel.findByIdAndUpdate(id, req.body).then(updatedEntry => {
+            res.send(updatedEntry);
+        }).catch(err => {
+            res.status(400).send({ message: err.message });
+        });
+
     }).catch(err => {
         res.status(404).send({ message: 'No entry founded for this id' });
     });
 }
 
+exports.delete = (req, res) => {
+    let id = req.params.id;
+
+    entryModel.findByIdAndRemove(id).then(removed => {
+        if (removed) {
+            res.status(204).send();
+        } else {
+            res.status(404).send({ message: 'No entry founded for this id' });
+        }
+    }).catch(err => {
+        res.status(400).send({ message: err.message });
+    });
+}
+
+exports.findById = (req, res) => {
+    let id = req.params.id;
+
+    entryModel.findById(id).then(findedEntry => {
+        if (findedEntry) {
+            res.send(findedEntry);
+        } else {
+            res.status(404).send({ message: 'No entry founded for this id' });
+        }
+    }).catch(err => {
+        res.status(400).send({ message: err.message });
+    });
+}

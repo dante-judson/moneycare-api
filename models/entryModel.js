@@ -13,6 +13,9 @@ const entryModel = new Schema({
         type: Number,
         required: true
     },
+    description:{
+        type:String
+    },
     userId:{
         type:String,
         required: true
