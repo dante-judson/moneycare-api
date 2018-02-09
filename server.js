@@ -14,6 +14,7 @@ require('./models/entryModel');
 
 require('./routes/userRoutes')(app);
 require('./routes/entryRoutes')(app);
+require('./routes/reportRoutes')(app);
 
 const port = process.env.PORT || 3000;
 
