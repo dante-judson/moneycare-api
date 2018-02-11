@@ -42,7 +42,6 @@ exports.monthStatement = (req, res) => {
 
     entryModel.find({ createdDate: { "$gte": firstMonthDay, "$lte": currentDate }, userId: user.id })
         .then(findedEntries => {
-            console.log(findedEntries);
             res.send(findedEntries);
         }).catch(err => {
             res.status(400).send({ message: err.message });
