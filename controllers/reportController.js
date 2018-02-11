@@ -10,7 +10,7 @@ exports.monthSumary = (req, res) => {
     let firstMonthDay = new Date();
     firstMonthDay.setDate(1);
 
-    entryModel.find({ createdDate: { "$gte": firstMonthDay, "$lte": currentDate }, userId:user.id })
+    entryModel.find({ createdDate: { "$gte": firstMonthDay, "$lte": currentDate }, userId: user.id })
         .then(findedEntries => {
             let revenues = 0;
             let expenses = 0;
@@ -27,6 +27,23 @@ exports.monthSumary = (req, res) => {
                 revenues: revenues,
                 expenses: expenses
             });
+        }).catch(err => {
+            res.status(400).send({ message: err.message });
+        })
+}
+
+exports.monthStatement = (req, res) => {
+    let user = req.user;
+
+    let currentDate = new Date();
+
+    let firstMonthDay = new Date();
+    firstMonthDay.setDate(1);
+
+    entryModel.find({ createdDate: { "$gte": firstMonthDay, "$lte": currentDate }, userId: user.id })
+        .then(findedEntries => {
+            console.log(findedEntries);
+            res.send(findedEntries);
         }).catch(err => {
             res.status(400).send({ message: err.message });
         })
