@@ -47,3 +47,40 @@ exports.monthStatement = (req, res) => {
             res.status(400).send({ message: err.message });
         })
 }
+
+exports.report = (req, res) => {
+    let user = req.user;
+
+    let initialDate = req.params.initialDate;
+    let finalDate = req.params.finalDate;
+    let description = req.params.description;
+    let type = req.params.type;
+
+    let query = new Object();
+
+    if ((initialDate != 'undefined') && (initialDate != '') && (initialDate != 'null')) {
+        query.createdDate = new Object();
+        query.createdDate.$gte = new Date(initialDate);
+    }
+
+    if ((finalDate != 'undefined') && (finalDate != '') && (finalDate != 'null')) {
+        if(!query.createdDate){
+            query.createdDate = new Object();
+        }
+        query.createdDate.$lte = new Date(finalDate);
+    }
+
+    if ((description != 'undefined') && (description != '') && (description != 'null')) {
+        query.description = description;
+    }
+
+    if ((type != 'undefined') && (type != '') && (type != 'null')) {
+        query.type = type;
+    }
+
+    entryModel.find(query).then(findedEntries => {
+        res.send(findedEntries);
+    }).catch(err => {
+        res.status(400).send({ message: err.message });
+    });
+}
