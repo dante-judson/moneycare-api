@@ -58,6 +58,8 @@ exports.report = (req, res) => {
 
     let query = new Object();
 
+    query.userId = user.id;
+
     if ((initialDate != 'undefined') && (initialDate != '') && (initialDate != 'null')) {
         query.createdDate = new Object();
         query.createdDate.$gte = new Date(initialDate);
