@@ -9,6 +9,7 @@ exports.monthSumary = (req, res) => {
 
     let firstMonthDay = new Date();
     firstMonthDay.setDate(1);
+    firstMonthDay.setHours(00,00,00);
 
     entryModel.find({ createdDate: { "$gte": firstMonthDay, "$lte": currentDate }, userId: user.id })
         .then(findedEntries => {
@@ -39,6 +40,7 @@ exports.monthStatement = (req, res) => {
 
     let firstMonthDay = new Date();
     firstMonthDay.setDate(1);
+    firstMonthDay.setHours(00,00,00);
 
     entryModel.find({ createdDate: { "$gte": firstMonthDay, "$lte": currentDate }, userId: user.id })
         .then(findedEntries => {
