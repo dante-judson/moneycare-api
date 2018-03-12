@@ -8,24 +8,29 @@ exports.monthSumary = (req, res) => {
     let currentDate = new Date();
 
     let firstMonthDay = new Date();
+
     firstMonthDay.setDate(1);
     firstMonthDay.setHours(00,00,00);
 
     entryModel.find({ createdDate: { "$gte": firstMonthDay, "$lte": currentDate }, userId: user.id })
         .then(findedEntries => {
-            let revenues = 0;
-            let expenses = 0;
+            let sumRevenues = 0;
+            let sumExpenses = 0;
+            let expenses = [];
 
             findedEntries.forEach(entry => {
                 if (entry.type === 'Receita') {
-                    revenues += entry.value;
+                    sumRevenues += entry.value;
                 } else {
-                    expenses += entry.value;
+                    expenses.push(entry);
+                    sumExpenses += entry.value;
                 }
             });
 
+
             res.send({
-                revenues: revenues,
+                sumRevenues: sumRevenues,
+                sumExpenses: sumExpenses,
                 expenses: expenses
             });
         }).catch(err => {

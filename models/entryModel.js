@@ -16,6 +16,11 @@ const entryModel = new Schema({
     description:{
         type:String
     },
+    category: {
+        type: String,
+        required: true,
+        default: 'Não Informado'
+    },
     userId:{
         type:String,
         required: true
